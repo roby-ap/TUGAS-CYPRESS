@@ -1,0 +1,14 @@
+{
+  "name": "cypress-automation-testing",
+  "version": "1.0.0",
+  "description": "belajar cypress by sanbercode",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "roby ap",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^13.1.0"
+  }
+}
