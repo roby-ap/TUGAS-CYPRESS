@@ -1,0 +1,27 @@
+{
+    "credentials": 
+        [
+            {
+                "username": "John Doe",
+                "password": "ThisIsNotAPassword"
+            }, {
+                "username": "John Doe",
+                "password": "ThisIsAPassword"
+            }, {
+                "username": "John Doee",
+                "password": "ThisIsNotAPassword"
+            }
+        ],
+    "responses":  
+        [
+            {
+                "url": "/#appointment",
+                "element": ":nth-child(3) > .col-sm-offset-3",
+                "text": "Healthcare Program"
+            }, {
+                "url": "/profile.php#login",
+                "element": ".text-danger",
+                "text": "Login failed!"
+            }
+        ]
+}

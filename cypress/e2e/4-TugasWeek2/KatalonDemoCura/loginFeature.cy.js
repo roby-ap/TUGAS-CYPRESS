@@ -1,8 +1,7 @@
 describe('template spec', () => {
 
   beforeEach(() => {
-    // run these tests as if in a desktop
-    // browser with a 720p monitor
+    
     cy.viewport(1536, 960)
 
     cy.visit('')
@@ -26,73 +25,67 @@ describe('template spec', () => {
   }) 
 
   it('Login success', () => {
-    cy.get('#btn-make-appointment')
-      .should('be.visible')
-      .click()
-    cy.get('#txt-username')
-      .clear()
-      .should('be.visible')
-      .scrollIntoView()
-      .type('John Doe')
-    cy.get('#txt-password')
-      .clear()
-      .should('be.visible')
-      .scrollIntoView()
-      .type('ThisIsNotAPassword')
-    cy.screenshot()
-    cy.get('#btn-login').should('be.visible').click()
-    cy.get(':nth-child(3) > .col-sm-offset-3').should("have.text", "Healthcare Program")
-    cy.screenshot()
+
+    cy.goToLoginPage()
+
+    cy.fixture('dataTest.json').then((data) => {
+
+      const dt = data;
+
+      cy.actionLogin(dt.credentials[0].username, dt.credentials[0].password)
+
+      cy.checkLoginStatus(dt.responses[0].url, dt.responses[0].element, dt.responses[0].text)
+
+    })
+
   })
 
   it('Login fail, wrong password', () => {
-    cy.get('#btn-make-appointment')
-      .should('be.visible')
-      .click()
-    cy.get('#txt-username')
-      .clear()
-      .should('be.visible')
-      .scrollIntoView()
-      .type('John Doe')
-    cy.get('#txt-password')
-      .clear()
-      .should('be.visible')
-      .scrollIntoView()
-      .type('ThisIsAPassword')
-    cy.screenshot()
-    cy.get('#btn-login').should('be.visible').click()
-    cy.get('.text-danger').contains('Login failed!')
-    cy.screenshot()
+
+    cy.goToLoginPage()
+
+    cy.fixture('dataTest.json').then((data) => {
+
+      const dt = data;
+
+      cy.actionLogin(dt.credentials[1].username, dt.credentials[1].password)
+
+      cy.checkLoginStatus(dt.responses[1].url, dt.responses[1].element, dt.responses[1].text)
+
+    })
+
   })
 
   it('Login fail, wrong username', () => {
-    cy.get('#btn-make-appointment')
-      .should('be.visible')
-      .click()
-    cy.get('#txt-username')
-      .clear()
-      .should('be.visible')
-      .scrollIntoView()
-      .type('John Doe ')
-    cy.get('#txt-password')
-      .clear()
-      .should('be.visible')
-      .scrollIntoView()
-      .type('ThisIsAPassword')
-    cy.screenshot()
-    cy.get('#btn-login').should('be.visible').click()
-    cy.get('.text-danger').contains('Login failed!')
-    cy.screenshot()
+
+    cy.goToLoginPage()
+
+    cy.fixture('dataTest.json').then((data) => {
+
+      const dt = data;
+
+      cy.actionLogin(dt.credentials[2].username, dt.credentials[2].password)
+
+      cy.checkLoginStatus(dt.responses[1].url, dt.responses[1].element, dt.responses[1].text)
+
+    })
+
   })
 
-  it.only('Login fail, empty credentials', () => {
-    cy.get('#btn-make-appointment')
-      .should('be.visible')
-      .click()
-    cy.screenshot()
-    cy.get('#btn-login').should('be.visible').click()
-    cy.get('.text-danger').contains('Login failed!')
-    cy.screenshot()
+  it('Login fail, empty credentials', () => {
+
+    cy.goToLoginPage()
+
+    cy.fixture('dataTest.json').then((data) => {
+
+      const dt = data;
+
+      cy.actionLogin("", "")
+
+      cy.checkLoginStatus(dt.responses[1].url, dt.responses[1].element, dt.responses[1].text)
+
+    })
+
   })
 
 })

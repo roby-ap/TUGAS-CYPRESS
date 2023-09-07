@@ -23,3 +23,61 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('goToLoginPage', () => {
+
+    cy.get('#btn-make-appointment')
+      .should('be.visible')
+      .click()
+
+    cy.url().should('include', '/profile.php#login')
+
+})
+
+Cypress.Commands.add('actionLogin', (username, password) => {
+
+    cy.log(username)
+
+    cy.log(password)
+
+    cy.url().should('include', '/profile.php#login')
+
+    cy.get('#txt-username')
+      .clear()
+      .should('be.visible')
+      .scrollIntoView()
+      if (username != "") {
+        cy.get('#txt-username')
+            .type(username)
+      }
+
+    cy.get('#txt-password')
+      .clear()
+      .should('be.visible')
+      .scrollIntoView()
+      if (password != "") {
+        cy.get('#txt-password')
+            .type(password)
+      }
+
+    cy.screenshot()
+
+    cy.get('#btn-login').should('be.visible').click()
+
+})
+
+Cypress.Commands.add('checkLoginStatus', (url, element, textValidation) => {
+
+    cy.log(url)
+
+    cy.log(element)
+
+    cy.log(textValidation)
+
+    cy.url().should('include', url)
+
+    cy.get(element).contains(textValidation)
+
+    cy.screenshot()
+
+})
